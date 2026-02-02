@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Be My Valentine ❤️</title>
 
-<!-- Cute Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 
 <style>
@@ -23,14 +22,14 @@ body {
   overflow: hidden;
 }
 
-/* Floating Hearts */
-.heart-float {
+/* Floating Hearts Animation */
+.floating-heart {
   position: absolute;
   font-size: 20px;
-  animation: float 6s linear infinite;
+  animation: floatUp 6s linear infinite;
 }
 
-@keyframes float {
+@keyframes floatUp {
   0% {
     transform: translateY(100vh);
     opacity: 1;
@@ -41,61 +40,64 @@ body {
   }
 }
 
-/* Heart Shape */
+/* PERFECT HEART SHAPE */
 .heart {
   position: relative;
-  width: 280px;
-  height: 250px;
-  background: #ff0033;
+  width: 220px;
+  height: 200px;
+  background-color: #ff0033;
   transform: rotate(-45deg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.heart::before,
-.heart::after {
+.heart:before,
+.heart:after {
   content: "";
   position: absolute;
-  width: 280px;
-  height: 250px;
-  background: #ff0033;
+  width: 220px;
+  height: 200px;
+  background-color: #ff0033;
   border-radius: 50%;
 }
 
-.heart::before {
-  top: -140px;
+.heart:before {
+  top: -110px;
+  left: 0;
 }
 
-.heart::after {
-  left: 140px;
+.heart:after {
+  left: 110px;
+  top: 0;
 }
 
-/* Content */
+/* Heart Content */
 .content {
   position: absolute;
+  width: 100%;
+  height: 100%;
   transform: rotate(45deg);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: white;
-  padding: 20px;
+  text-align: center;
+  padding: 15px;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 /* Buttons */
-.buttons {
-  margin-top: 12px;
-}
-
 button {
-  padding: 10px 18px;
+  padding: 10px 16px;
+  margin: 5px;
   border: none;
-  border-radius: 25px;
+  border-radius: 20px;
   font-size: 14px;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
   transition: 0.3s;
 }
 
@@ -114,28 +116,28 @@ button {
 }
 
 /* Mobile Responsive */
-@media (max-width: 500px) {
+@media (max-width: 480px) {
   .heart {
-    width: 220px;
-    height: 200px;
+    width: 180px;
+    height: 160px;
   }
 
-  .heart::before,
-  .heart::after {
-    width: 220px;
-    height: 200px;
+  .heart:before,
+  .heart:after {
+    width: 180px;
+    height: 160px;
   }
 
-  .heart::before {
-    top: -110px;
+  .heart:before {
+    top: -90px;
   }
 
-  .heart::after {
-    left: 110px;
+  .heart:after {
+    left: 90px;
   }
 
   h2 {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 </style>
@@ -147,7 +149,7 @@ button {
   <div class="content">
     <h2>Will you be my Valentine? 💘</h2>
 
-    <div class="buttons">
+    <div>
       <button id="yesBtn">Yes ❤️</button>
       <button id="noBtn">No 😈</button>
       <button id="dynamicBtn"></button>
@@ -155,19 +157,14 @@ button {
   </div>
 </div>
 
-<!-- Sound -->
-<audio id="yesSound">
-  <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Confetti -->
+<!-- Confetti Library -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-// Floating hearts generator
+// Floating Hearts Generator
 function createFloatingHeart() {
   const heart = document.createElement("div");
-  heart.className = "heart-float";
+  heart.classList.add("floating-heart");
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = Math.random() * 20 + 15 + "px";
@@ -180,11 +177,10 @@ function createFloatingHeart() {
 
 setInterval(createFloatingHeart, 300);
 
-// Button logic
+// Buttons Logic
 const noBtn = document.getElementById("noBtn");
 const dynamicBtn = document.getElementById("dynamicBtn");
 const yesBtn = document.getElementById("yesBtn");
-const yesSound = document.getElementById("yesSound");
 
 let steps = [
   "Are you sure? 😏",
@@ -196,21 +192,21 @@ let steps = [
 
 let stepIndex = 0;
 
-// NO Button moves away 😈
+// NO button runs away 😈
 noBtn.addEventListener("mouseover", () => {
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 200 - 100;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 });
 
-// NO click
+// NO click logic
 noBtn.addEventListener("click", () => {
   noBtn.style.display = "none";
   dynamicBtn.style.display = "inline-block";
   dynamicBtn.innerText = steps[stepIndex];
 });
 
-// Loop Button
+// Loop dynamic button
 dynamicBtn.addEventListener("click", () => {
   stepIndex++;
 
@@ -223,10 +219,8 @@ dynamicBtn.addEventListener("click", () => {
   }
 });
 
-// YES Button celebration
+// YES button celebration
 yesBtn.addEventListener("click", () => {
-
-  yesSound.play();
 
   confetti({
     particleCount: 200,
@@ -236,7 +230,7 @@ yesBtn.addEventListener("click", () => {
 
   setTimeout(() => {
     alert("🎉 Congratulations! I knew you will say YES ❤️😍");
-  }, 500);
+  }, 400);
 });
 </script>
 
