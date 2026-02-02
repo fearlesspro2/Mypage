@@ -6,9 +6,8 @@
 <title>Be My Valentine ❤️</title>
 
 <style>
-/* =========================
-   GLOBAL STYLES
-========================= */
+
+/* ================= GLOBAL ================= */
 
 * {
   box-sizing: border-box;
@@ -17,7 +16,9 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #ff6a88, #ff99ac);
+  background: linear-gradient(270deg,#ff5f7e,#ff99ac,#ff4b6e);
+  background-size: 400% 400%;
+  animation: bgFlow 14s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,69 +26,92 @@ body {
   overflow: hidden;
 }
 
-/* =========================
-   FLOATING HEART BACKGROUND
-========================= */
+@keyframes bgFlow {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* ================= FLOATING HEARTS ================= */
 
 .floating-heart {
   position: absolute;
   font-size: 18px;
-  opacity: 0.8;
-  animation: floatUp 7s linear infinite;
+  opacity: .85;
+  animation: floatUp 9s linear infinite;
 }
 
 @keyframes floatUp {
   from {
-    transform: translateY(110vh);
+    transform: translateY(110vh) rotate(0deg);
     opacity: 1;
   }
   to {
-    transform: translateY(-10vh);
+    transform: translateY(-10vh) rotate(360deg);
     opacity: 0;
   }
 }
 
-/* =========================
-   HEART SHAPE
-========================= */
+/* ================= HEART SHAPE ================= */
 
 .heart {
   position: relative;
   width: 300px;
   height: 270px;
-  background: linear-gradient(145deg, #ff0033, #ff4d6d);
+  background: linear-gradient(145deg,#ff0033,#ff4d6d);
   transform: rotate(-45deg);
-  box-shadow: 0 0 30px rgba(255, 0, 80, 0.7);
-  animation: glowPulse 2s infinite alternate;
+  box-shadow: 0 0 40px rgba(255,0,80,.8);
+  animation: heartbeat 1.4s infinite;
 }
 
-/* Glowing Border Animation */
-@keyframes glowPulse {
-  from { box-shadow: 0 0 20px rgba(255,0,80,0.5); }
-  to { box-shadow: 0 0 40px rgba(255,0,80,0.9); }
+/* Heart beat */
+@keyframes heartbeat {
+  0% {transform: rotate(-45deg) scale(1);}
+  25% {transform: rotate(-45deg) scale(1.08);}
+  40% {transform: rotate(-45deg) scale(1);}
+  60% {transform: rotate(-45deg) scale(1.1);}
+  100% {transform: rotate(-45deg) scale(1);}
 }
 
-.heart::before,
+/* Shine sweep */
 .heart::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  height: 140%;
+  background: rgba(255,255,255,.15);
+  top: -20%;
+  left: -80%;
+  transform: rotate(25deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {left:-80%;}
+  100% {left:140%;}
+}
+
+.heart:before {
   content: "";
   position: absolute;
   width: 300px;
   height: 270px;
   background: inherit;
   border-radius: 50%;
-}
-
-.heart::before {
   top: -150px;
 }
 
-.heart::after {
+.heart span {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 270px;
+  background: inherit;
+  border-radius: 50%;
   left: 150px;
 }
 
-/* =========================
-   HEART CONTENT
-========================= */
+/* ================= HEART CONTENT ================= */
 
 .content {
   position: absolute;
@@ -103,97 +127,116 @@ body {
   padding: 20px;
 }
 
-/* Text Animation */
 .content h1 {
   font-size: 22px;
   margin-bottom: 15px;
-  animation: fadeIn 2s ease;
+  animation: textFloat 2s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes textFloat {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
 }
 
-/* =========================
-   BUTTON STYLES
-========================= */
-
-.buttons {
-  margin-top: 10px;
-}
+/* ================= BUTTONS ================= */
 
 button {
-  padding: 10px 18px;
+  padding: 12px 22px;
   margin: 6px;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: .25s;
 }
 
-/* Bounce Hover Effect */
+/* Bounce hover */
 button:hover {
-  transform: scale(1.12);
-  box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+  animation: bounce .4s;
+  box-shadow: 0 6px 18px rgba(0,0,0,.3);
+}
+
+@keyframes bounce {
+  0% {transform:scale(1);}
+  50% {transform:scale(1.15);}
+  100% {transform:scale(1);}
 }
 
 #yesBtn {
-  background: linear-gradient(to right, #00ffb3, #00ffaa);
+  background: linear-gradient(to right,#00ffb3,#00ffaa);
 }
 
 #noBtn {
-  background: #ffffff;
+  background: white;
 }
 
 #loopBtn {
-  background: #ffe066;
+  background: gold;
   display: none;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ================= MODAL ================= */
 
-@media (max-width: 500px) {
-
-  .heart {
-    width: 240px;
-    height: 215px;
-  }
-
-  .heart::before,
-  .heart::after {
-    width: 240px;
-    height: 215px;
-  }
-
-  .heart::before {
-    top: -120px;
-  }
-
-  .heart::after {
-    left: 120px;
-  }
-
-  .content h1 {
-    font-size: 18px;
-  }
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
 }
+
+.modal-box {
+  background: white;
+  padding: 25px 35px;
+  border-radius: 15px;
+  text-align: center;
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  from {transform:scale(.6); opacity:0;}
+  to {transform:scale(1); opacity:1;}
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:500px){
+
+.heart{
+  width:240px;
+  height:215px;
+}
+
+.heart:before,
+.heart span{
+  width:240px;
+  height:215px;
+}
+
+.heart:before{top:-120px;}
+.heart span{left:120px;}
+
+.content h1{
+  font-size:18px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- HEART CONTAINER -->
-<div class="heart">
+<!-- HEART -->
+<div class="heart" id="heart">
+  <span></span>
   <div class="content">
 
     <h1>Will you be my Valentine? 💖</h1>
 
-    <div class="buttons">
+    <div>
       <button id="yesBtn">Yes ❤️</button>
       <button id="noBtn">No 💔</button>
       <button id="loopBtn"></button>
@@ -202,86 +245,93 @@ button:hover {
   </div>
 </div>
 
-<!-- Confetti Library -->
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h2>Congratulations ❤️</h2>
+    <p>I knew you would say YES!</p>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
 
-/* =========================
-   FLOATING HEART GENERATOR
-========================= */
+/* FLOATING HEARTS */
 
-function createFloatingHeart() {
-  const heart = document.createElement("div");
-  heart.className = "floating-heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 14 + "px";
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 7000);
+function spawnHeart(){
+  const h=document.createElement("div");
+  h.className="floating-heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*22+14+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),9000);
 }
+setInterval(spawnHeart,350);
 
-// Create hearts continuously
-setInterval(createFloatingHeart, 350);
+/* BUTTON LOOP */
 
-/* =========================
-   LOOP BUTTON LOGIC
-========================= */
+const noBtn=document.getElementById("noBtn");
+const loopBtn=document.getElementById("loopBtn");
+const yesBtn=document.getElementById("yesBtn");
+const modal=document.getElementById("modal");
 
-const noBtn = document.getElementById("noBtn");
-const loopBtn = document.getElementById("loopBtn");
-const yesBtn = document.getElementById("yesBtn");
-
-const loopSteps = [
-  "Are you sure?",
-  "This is not possible 😢",
-  "Think again 🤔"
+const steps=[
+ "Are you sure?",
+ "This is not possible 😢",
+ "Think again 🤔"
 ];
 
-let stepIndex = 0;
+let step=0;
 
-// When NO is clicked
-noBtn.addEventListener("click", () => {
-  noBtn.style.display = "none";
-  loopBtn.style.display = "inline-block";
-  loopBtn.textContent = loopSteps[stepIndex];
+noBtn.onclick=()=>{
+ noBtn.style.display="none";
+ loopBtn.style.display="inline-block";
+ loopBtn.innerText=steps[step];
+};
+
+loopBtn.onclick=()=>{
+ step++;
+ if(step>=steps.length){
+   step=0;
+   loopBtn.style.display="none";
+   noBtn.style.display="inline-block";
+ }else{
+   loopBtn.innerText=steps[step];
+ }
+};
+
+/* YES ACTION */
+
+yesBtn.onclick=()=>{
+
+ confetti({
+  particleCount:250,
+  spread:120,
+  origin:{y:.6}
+ });
+
+ modal.style.display="flex";
+
+};
+
+/* CLICK ANYWHERE TO CLOSE MODAL */
+
+modal.onclick=()=>{
+ modal.style.display="none";
+};
+
+/* PARALLAX HEART MOVE */
+
+const heart=document.getElementById("heart");
+
+document.addEventListener("mousemove",(e)=>{
+ const x=(window.innerWidth/2 - e.clientX)/40;
+ const y=(window.innerHeight/2 - e.clientY)/40;
+ heart.style.transform=`rotate(-45deg) translate(${x}px,${y}px)`;
 });
 
-// Loop behavior
-loopBtn.addEventListener("click", () => {
-
-  stepIndex++;
-
-  if (stepIndex >= loopSteps.length) {
-    stepIndex = 0;
-    loopBtn.style.display = "none";
-    noBtn.style.display = "inline-block";
-  } else {
-    loopBtn.textContent = loopSteps[stepIndex];
-  }
-
-});
-
-/* =========================
-   YES BUTTON ACTION
-========================= */
-
-yesBtn.addEventListener("click", () => {
-
-  // Confetti celebration
-  confetti({
-    particleCount: 180,
-    spread: 100,
-    origin: { y: 0.6 }
-  });
-
-  // Popup message
-  setTimeout(() => {
-    alert("Congratulations ❤️\nI knew you would say YES!");
-  }, 400);
-
-});
 </script>
 
 </body>
