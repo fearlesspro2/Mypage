@@ -2,122 +2,109 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Valentine Experience ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
 
 <style>
+/* =========================
+   GLOBAL STYLES
+========================= */
+
 * {
   box-sizing: border-box;
-  user-select: none;
 }
 
 body {
   margin: 0;
   height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-  background: radial-gradient(circle at top, #ff4b7d, #0d001a);
+  background: linear-gradient(135deg, #ff5f7e, #ff9a9e);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Segoe UI", sans-serif;
+  overflow: hidden;
 }
 
-/* BACKGROUND ANIMATION */
-.bg-glow {
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,0,100,.2), transparent 70%);
-  animation: glowMove 10s infinite alternate;
-}
+/* =========================
+   FLOATING HEART BACKGROUND
+========================= */
 
-@keyframes glowMove {
-  0% { transform: translate(-20%, -20%); }
-  100% { transform: translate(20%, 20%); }
-}
-
-/* FLOATING PARTICLES */
-.particle {
+.floating-heart {
   position: absolute;
   font-size: 18px;
-  animation: float 7s linear infinite;
+  animation: floatUp 7s linear infinite;
+  opacity: 0.8;
 }
 
-@keyframes float {
-  from { transform: translateY(110vh); opacity: 1; }
-  to { transform: translateY(-10vh); opacity: 0; }
+@keyframes floatUp {
+  from {
+    transform: translateY(110vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
 }
 
-/* MAIN WRAPPER */
-.wrapper {
-  position: relative;
-  text-align: center;
-  z-index: 10;
-}
+/* =========================
+   HEART SHAPE CONTAINER
+========================= */
 
-/* HEART ROW */
-.hearts {
-  display: flex;
-  gap: 60px;
-  justify-content: center;
-  margin-bottom: 25px;
-}
-
-/* HEART DESIGN */
 .heart {
-  width: 140px;
-  height: 130px;
-  background: linear-gradient(145deg,#ff004c,#ff3b6f);
   position: relative;
+  width: 300px;
+  height: 270px;
+  background: #ff0033;
   transform: rotate(-45deg);
-  animation: pulse 1.3s infinite;
-  box-shadow: 0 0 25px rgba(255,0,80,.7);
+  box-shadow: 0 0 25px rgba(255, 0, 80, 0.6);
+  animation: glowPulse 2s infinite alternate;
 }
 
-@keyframes pulse {
-  0% { transform: rotate(-45deg) scale(1); }
-  50% { transform: rotate(-45deg) scale(1.08); }
-  100% { transform: rotate(-45deg) scale(1); }
+@keyframes glowPulse {
+  from { box-shadow: 0 0 18px rgba(255,0,80,0.5); }
+  to { box-shadow: 0 0 35px rgba(255,0,80,0.9); }
 }
 
-.heart:before,
-.heart:after {
+.heart::before,
+.heart::after {
   content: "";
   position: absolute;
-  width: 140px;
-  height: 130px;
-  background: inherit;
+  width: 300px;
+  height: 270px;
+  background: #ff0033;
   border-radius: 50%;
 }
 
-.heart:before {
-  top: -70px;
+.heart::before {
+  top: -150px;
 }
 
-.heart:after {
-  left: 70px;
+.heart::after {
+  left: 150px;
 }
 
-/* HEART TEXT */
-.heart span {
+/* =========================
+   HEART CONTENT
+========================= */
+
+.content {
   position: absolute;
   width: 100%;
   height: 100%;
   transform: rotate(45deg);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   color: white;
-  font-size: 30px;
+  text-align: center;
+  padding: 20px;
 }
 
-/* QUESTION */
-.question {
-  color: white;
-  font-size: 26px;
+.content h1 {
+  font-size: 22px;
   margin-bottom: 15px;
-  letter-spacing: 1px;
   animation: fadeIn 2s ease;
 }
 
@@ -126,142 +113,171 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* BUTTONS */
+/* =========================
+   BUTTON STYLES
+========================= */
+
+.buttons {
+  margin-top: 10px;
+}
+
 button {
-  padding: 12px 22px;
+  padding: 10px 18px;
+  margin: 6px;
   border: none;
-  border-radius: 25px;
-  font-weight: bold;
+  border-radius: 20px;
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
-  transition: .3s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Bounce on hover */
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 #yesBtn {
-  background: linear-gradient(to right,#00ffb3,#00ffaa);
-  box-shadow: 0 0 15px rgba(0,255,180,.8);
+  background: #00ffb3;
 }
 
 #noBtn {
   background: white;
-  position: relative;
 }
 
-#trapBtn {
-  background: gold;
+#loopBtn {
+  background: #ffe066;
   display: none;
 }
 
-/* MOBILE */
-@media(max-width:500px){
-  .hearts { gap: 30px; }
-  .question { font-size: 20px; }
-  .heart { width: 110px; height: 100px; }
-  .heart:before,.heart:after {
-    width: 110px;
-    height: 100px;
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 500px) {
+
+  .heart {
+    width: 240px;
+    height: 215px;
   }
-  .heart:before { top:-55px; }
-  .heart:after { left:55px; }
+
+  .heart::before,
+  .heart::after {
+    width: 240px;
+    height: 215px;
+  }
+
+  .heart::before {
+    top: -120px;
+  }
+
+  .heart::after {
+    left: 120px;
+  }
+
+  .content h1 {
+    font-size: 18px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-glow"></div>
+<!-- HEART CONTAINER -->
+<div class="heart">
+  <div class="content">
 
-<div class="wrapper">
+    <h1>Purva 💖<br>Will you be my Valentine?</h1>
 
-  <div class="hearts">
-    <div class="heart"><span>13</span></div>
-    <div class="heart"><span>14</span></div>
+    <div class="buttons">
+      <button id="yesBtn">Yes ❤️</button>
+      <button id="noBtn">No 💔</button>
+      <button id="loopBtn"></button>
+    </div>
+
   </div>
-
-  <div class="question">
-    Will you be my Valentine? 💘
-  </div>
-
-  <div>
-    <button id="yesBtn">YES ❤️</button>
-    <button id="noBtn">NO 😈</button>
-    <button id="trapBtn"></button>
-  </div>
-
 </div>
 
+<!-- Confetti Library -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
+/* =========================
+   FLOATING HEART ANIMATION
+========================= */
 
-// FLOATING HEART PARTICLES
-function spawnParticle(){
-  const p = document.createElement("div");
-  p.className = "particle";
-  p.innerHTML = "❤️";
-  p.style.left = Math.random()*100+"vw";
-  p.style.fontSize = Math.random()*20+14+"px";
-  document.body.appendChild(p);
+function createFloatingHeart() {
+  const heart = document.createElement("div");
+  heart.className = "floating-heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 14 + "px";
+  document.body.appendChild(heart);
 
-  setTimeout(()=>p.remove(),7000);
+  setTimeout(() => heart.remove(), 7000);
 }
-setInterval(spawnParticle,300);
 
-// BUTTON LOGIC
+setInterval(createFloatingHeart, 350);
+
+/* =========================
+   LOOP BUTTON LOGIC
+========================= */
+
 const noBtn = document.getElementById("noBtn");
-const trapBtn = document.getElementById("trapBtn");
+const loopBtn = document.getElementById("loopBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-let trapTexts = [
- "Are you sure? 😏",
- "Impossible ❌",
- "Heart broken 💔",
- "Try again 😈",
- "Last warning 😢"
+const loopSteps = [
+  "Are you sure?",
+  "This is not possible 😢",
+  "Think again 🤔"
 ];
 
-let index = 0;
+let stepIndex = 0;
 
-// NO BUTTON ESCAPE AI 😈
-noBtn.addEventListener("mouseover",()=>{
-  let x = Math.random()*250-125;
-  let y = Math.random()*200-100;
-  noBtn.style.transform = `translate(${x}px,${y}px)`;
+// When NO clicked
+noBtn.addEventListener("click", () => {
+  noBtn.style.display = "none";
+  loopBtn.style.display = "inline-block";
+  loopBtn.textContent = loopSteps[stepIndex];
 });
 
-// NO CLICK
-noBtn.onclick = ()=>{
-  noBtn.style.display="none";
-  trapBtn.style.display="inline-block";
-  trapBtn.innerText = trapTexts[index];
-};
+// Loop button behavior
+loopBtn.addEventListener("click", () => {
 
-// LOOP TRAP
-trapBtn.onclick = ()=>{
-  index++;
-  if(index>=trapTexts.length){
-    index=0;
-    trapBtn.style.display="none";
-    noBtn.style.display="inline-block";
+  stepIndex++;
+
+  if (stepIndex >= loopSteps.length) {
+    stepIndex = 0;
+    loopBtn.style.display = "none";
+    noBtn.style.display = "inline-block";
   } else {
-    trapBtn.innerText = trapTexts[index];
+    loopBtn.textContent = loopSteps[stepIndex];
   }
-};
 
-// YES MAGIC
-yesBtn.onclick = ()=>{
+});
 
+/* =========================
+   YES BUTTON ACTION
+========================= */
+
+yesBtn.addEventListener("click", () => {
+
+  // Confetti celebration
   confetti({
-    particleCount:300,
-    spread:120,
-    origin:{y:.6}
+    particleCount: 180,
+    spread: 100,
+    origin: { y: 0.6 }
   });
 
-  setTimeout(()=>{
-    alert("💖 Congratulations!\nI knew you would say YES 😍");
-  },500);
-};
+  // Popup message
+  setTimeout(() => {
+    alert("Congratulations to you ❤️\nI knew you would say YES!");
+  }, 400);
 
+});
 </script>
 
 </body>
