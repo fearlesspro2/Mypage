@@ -2,112 +2,144 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine ❤️</title>
+<title>Valentine Experience ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
 
 <style>
 * {
   box-sizing: border-box;
+  user-select: none;
 }
 
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #ff4b7d, #0d001a);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
 }
 
-/* Floating Hearts */
-.floating-heart {
+/* BACKGROUND ANIMATION */
+.bg-glow {
   position: absolute;
-  font-size: 20px;
-  animation: floatUp 6s linear infinite;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,0,100,.2), transparent 70%);
+  animation: glowMove 10s infinite alternate;
 }
 
-@keyframes floatUp {
-  0% { transform: translateY(100vh); opacity: 1; }
-  100% { transform: translateY(-10vh); opacity: 0; }
+@keyframes glowMove {
+  0% { transform: translate(-20%, -20%); }
+  100% { transform: translate(20%, 20%); }
 }
 
-/* Layout */
+/* FLOATING PARTICLES */
+.particle {
+  position: absolute;
+  font-size: 18px;
+  animation: float 7s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(110vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* MAIN WRAPPER */
 .wrapper {
-  text-align: center;
-}
-
-/* Hearts Container */
-.hearts-row {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-bottom: 20px;
-}
-
-/* Heart Shape */
-.heart {
   position: relative;
+  text-align: center;
+  z-index: 10;
+}
+
+/* HEART ROW */
+.hearts {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+/* HEART DESIGN */
+.heart {
   width: 140px;
   height: 130px;
-  background: #ff0033;
+  background: linear-gradient(145deg,#ff004c,#ff3b6f);
+  position: relative;
   transform: rotate(-45deg);
+  animation: pulse 1.3s infinite;
+  box-shadow: 0 0 25px rgba(255,0,80,.7);
 }
 
-.heart::before,
-.heart::after {
+@keyframes pulse {
+  0% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(1.08); }
+  100% { transform: rotate(-45deg) scale(1); }
+}
+
+.heart:before,
+.heart:after {
   content: "";
   position: absolute;
   width: 140px;
   height: 130px;
-  background: #ff0033;
+  background: inherit;
   border-radius: 50%;
 }
 
-.heart::before {
+.heart:before {
   top: -70px;
 }
 
-.heart::after {
+.heart:after {
   left: 70px;
 }
 
-/* Heart Number */
+/* HEART TEXT */
 .heart span {
   position: absolute;
   width: 100%;
   height: 100%;
   transform: rotate(45deg);
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 28px;
+  justify-content: center;
   color: white;
+  font-size: 30px;
 }
 
-/* Text */
+/* QUESTION */
 .question {
-  font-size: 22px;
   color: white;
+  font-size: 26px;
   margin-bottom: 15px;
+  letter-spacing: 1px;
+  animation: fadeIn 2s ease;
 }
 
-/* Buttons */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* BUTTONS */
 button {
-  padding: 10px 18px;
-  margin: 6px;
+  padding: 12px 22px;
   border: none;
-  border-radius: 20px;
-  font-size: 14px;
+  border-radius: 25px;
   font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: .3s;
 }
 
 #yesBtn {
-  background: #00ffb3;
+  background: linear-gradient(to right,#00ffb3,#00ffaa);
+  box-shadow: 0 0 15px rgba(0,255,180,.8);
 }
 
 #noBtn {
@@ -115,142 +147,120 @@ button {
   position: relative;
 }
 
-#dynamicBtn {
-  background: yellow;
+#trapBtn {
+  background: gold;
   display: none;
 }
 
-/* Mobile Responsive */
-@media (max-width: 500px) {
-
-  .hearts-row {
-    gap: 20px;
-  }
-
-  .heart {
+/* MOBILE */
+@media(max-width:500px){
+  .hearts { gap: 30px; }
+  .question { font-size: 20px; }
+  .heart { width: 110px; height: 100px; }
+  .heart:before,.heart:after {
     width: 110px;
     height: 100px;
   }
-
-  .heart::before,
-  .heart::after {
-    width: 110px;
-    height: 100px;
-  }
-
-  .heart::before {
-    top: -55px;
-  }
-
-  .heart::after {
-    left: 55px;
-  }
-
-  .question {
-    font-size: 18px;
-  }
+  .heart:before { top:-55px; }
+  .heart:after { left:55px; }
 }
 </style>
 </head>
 
 <body>
 
+<div class="bg-glow"></div>
+
 <div class="wrapper">
 
-  <!-- Hearts Row -->
-  <div class="hearts-row">
+  <div class="hearts">
     <div class="heart"><span>13</span></div>
     <div class="heart"><span>14</span></div>
   </div>
 
-  <!-- Text -->
   <div class="question">
     Will you be my Valentine? 💘
   </div>
 
-  <!-- Buttons -->
   <div>
-    <button id="yesBtn">Yes ❤️</button>
-    <button id="noBtn">No 😈</button>
-    <button id="dynamicBtn"></button>
+    <button id="yesBtn">YES ❤️</button>
+    <button id="noBtn">NO 😈</button>
+    <button id="trapBtn"></button>
   </div>
 
 </div>
 
-<!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
 
-// Floating hearts generator
-function createFloatingHeart() {
-  const heart = document.createElement("div");
-  heart.className = "floating-heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 15 + "px";
-  document.body.appendChild(heart);
+// FLOATING HEART PARTICLES
+function spawnParticle(){
+  const p = document.createElement("div");
+  p.className = "particle";
+  p.innerHTML = "❤️";
+  p.style.left = Math.random()*100+"vw";
+  p.style.fontSize = Math.random()*20+14+"px";
+  document.body.appendChild(p);
 
-  setTimeout(() => heart.remove(), 6000);
+  setTimeout(()=>p.remove(),7000);
 }
+setInterval(spawnParticle,300);
 
-setInterval(createFloatingHeart, 350);
-
-// Buttons Logic
+// BUTTON LOGIC
 const noBtn = document.getElementById("noBtn");
-const dynamicBtn = document.getElementById("dynamicBtn");
+const trapBtn = document.getElementById("trapBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-let steps = [
-  "Are you sure? 😏",
-  "This is not possible 😤",
-  "Think again 🤔",
-  "Don't break my heart 💔",
-  "Last chance 😢"
+let trapTexts = [
+ "Are you sure? 😏",
+ "Impossible ❌",
+ "Heart broken 💔",
+ "Try again 😈",
+ "Last warning 😢"
 ];
 
-let stepIndex = 0;
+let index = 0;
 
-// NO button escape 😈
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 200 - 100;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+// NO BUTTON ESCAPE AI 😈
+noBtn.addEventListener("mouseover",()=>{
+  let x = Math.random()*250-125;
+  let y = Math.random()*200-100;
+  noBtn.style.transform = `translate(${x}px,${y}px)`;
 });
 
-// NO click
-noBtn.addEventListener("click", () => {
-  noBtn.style.display = "none";
-  dynamicBtn.style.display = "inline-block";
-  dynamicBtn.innerText = steps[stepIndex];
-});
+// NO CLICK
+noBtn.onclick = ()=>{
+  noBtn.style.display="none";
+  trapBtn.style.display="inline-block";
+  trapBtn.innerText = trapTexts[index];
+};
 
-// Loop buttons
-dynamicBtn.addEventListener("click", () => {
-  stepIndex++;
-
-  if (stepIndex >= steps.length) {
-    stepIndex = 0;
-    dynamicBtn.style.display = "none";
-    noBtn.style.display = "inline-block";
+// LOOP TRAP
+trapBtn.onclick = ()=>{
+  index++;
+  if(index>=trapTexts.length){
+    index=0;
+    trapBtn.style.display="none";
+    noBtn.style.display="inline-block";
   } else {
-    dynamicBtn.innerText = steps[stepIndex];
+    trapBtn.innerText = trapTexts[index];
   }
-});
+};
 
-// YES celebration (NO SOUND)
-yesBtn.addEventListener("click", () => {
+// YES MAGIC
+yesBtn.onclick = ()=>{
 
   confetti({
-    particleCount: 180,
-    spread: 90,
-    origin: { y: 0.6 }
+    particleCount:300,
+    spread:120,
+    origin:{y:.6}
   });
 
-  setTimeout(() => {
-    alert("🎉 Congratulations! I knew you will say YES ❤️😍");
-  }, 400);
-});
+  setTimeout(()=>{
+    alert("💖 Congratulations!\nI knew you would say YES 😍");
+  },500);
+};
 
 </script>
 
