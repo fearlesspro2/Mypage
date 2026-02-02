@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Be My Valentine ❤️</title>
 
 <style>
-/* =========================
+/* =====================
    GLOBAL STYLES
-========================= */
-
+===================== */
 * {
   box-sizing: border-box;
 }
@@ -17,23 +16,22 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #ff5f7e, #ff9a9e);
+  background: linear-gradient(135deg, #ff6a88, #ff99ac);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
 }
 
-/* =========================
-   FLOATING HEART BACKGROUND
-========================= */
-
+/* =====================
+   FLOATING HEARTS (BACKGROUND)
+===================== */
 .floating-heart {
   position: absolute;
   font-size: 18px;
-  animation: floatUp 7s linear infinite;
   opacity: 0.8;
+  animation: floatUp 7s linear infinite;
 }
 
 @keyframes floatUp {
@@ -47,10 +45,9 @@ body {
   }
 }
 
-/* =========================
-   HEART SHAPE CONTAINER
-========================= */
-
+/* =====================
+   HEART CONTAINER
+===================== */
 .heart {
   position: relative;
   width: 300px;
@@ -58,12 +55,12 @@ body {
   background: #ff0033;
   transform: rotate(-45deg);
   box-shadow: 0 0 25px rgba(255, 0, 80, 0.6);
-  animation: glowPulse 2s infinite alternate;
+  animation: glow 2s infinite alternate;
 }
 
-@keyframes glowPulse {
-  from { box-shadow: 0 0 18px rgba(255,0,80,0.5); }
-  to { box-shadow: 0 0 35px rgba(255,0,80,0.9); }
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(255,0,80,0.5); }
+  to   { box-shadow: 0 0 35px rgba(255,0,80,0.9); }
 }
 
 .heart::before,
@@ -78,16 +75,17 @@ body {
 
 .heart::before {
   top: -150px;
+  left: 0;
 }
 
 .heart::after {
   left: 150px;
+  top: 0;
 }
 
-/* =========================
+/* =====================
    HEART CONTENT
-========================= */
-
+===================== */
 .content {
   position: absolute;
   width: 100%;
@@ -97,26 +95,19 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
   text-align: center;
+  color: white;
   padding: 20px;
 }
 
 .content h1 {
   font-size: 22px;
   margin-bottom: 15px;
-  animation: fadeIn 2s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* =========================
-   BUTTON STYLES
-========================= */
-
+/* =====================
+   BUTTONS
+===================== */
 .buttons {
   margin-top: 10px;
 }
@@ -129,10 +120,9 @@ button {
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Bounce on hover */
 button:hover {
   transform: scale(1.08);
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -143,7 +133,7 @@ button:hover {
 }
 
 #noBtn {
-  background: white;
+  background: #ffffff;
 }
 
 #loopBtn {
@@ -151,31 +141,25 @@ button:hover {
   display: none;
 }
 
-/* =========================
-   MOBILE RESPONSIVE
-========================= */
-
+/* =====================
+   RESPONSIVE
+===================== */
 @media (max-width: 500px) {
-
   .heart {
     width: 240px;
     height: 215px;
   }
-
   .heart::before,
   .heart::after {
     width: 240px;
     height: 215px;
   }
-
   .heart::before {
     top: -120px;
   }
-
   .heart::after {
     left: 120px;
   }
-
   .content h1 {
     font-size: 18px;
   }
@@ -185,29 +169,26 @@ button:hover {
 
 <body>
 
-<!-- HEART CONTAINER -->
+<!-- HEART -->
 <div class="heart">
   <div class="content">
-
-    <h1>Purva 💖<br>Will you be my Valentine?</h1>
+    <h1>Will you be my Valentine? 💖</h1>
 
     <div class="buttons">
       <button id="yesBtn">Yes ❤️</button>
       <button id="noBtn">No 💔</button>
       <button id="loopBtn"></button>
     </div>
-
   </div>
 </div>
 
-<!-- Confetti Library -->
+<!-- CONFETTI (PURE JS LIBRARY) -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-/* =========================
-   FLOATING HEART ANIMATION
-========================= */
-
+/* =====================
+   FLOATING HEARTS LOGIC
+===================== */
 function createFloatingHeart() {
   const heart = document.createElement("div");
   heart.className = "floating-heart";
@@ -221,62 +202,52 @@ function createFloatingHeart() {
 
 setInterval(createFloatingHeart, 350);
 
-/* =========================
-   LOOP BUTTON LOGIC
-========================= */
-
+/* =====================
+   BUTTON LOOP LOGIC
+===================== */
 const noBtn = document.getElementById("noBtn");
 const loopBtn = document.getElementById("loopBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-const loopSteps = [
+const loopTexts = [
   "Are you sure?",
   "This is not possible 😢",
   "Think again 🤔"
 ];
 
-let stepIndex = 0;
+let step = 0;
 
-// When NO clicked
 noBtn.addEventListener("click", () => {
   noBtn.style.display = "none";
   loopBtn.style.display = "inline-block";
-  loopBtn.textContent = loopSteps[stepIndex];
+  loopBtn.textContent = loopTexts[step];
 });
 
-// Loop button behavior
 loopBtn.addEventListener("click", () => {
+  step++;
 
-  stepIndex++;
-
-  if (stepIndex >= loopSteps.length) {
-    stepIndex = 0;
+  if (step >= loopTexts.length) {
+    step = 0;
     loopBtn.style.display = "none";
     noBtn.style.display = "inline-block";
   } else {
-    loopBtn.textContent = loopSteps[stepIndex];
+    loopBtn.textContent = loopTexts[step];
   }
-
 });
 
-/* =========================
-   YES BUTTON ACTION
-========================= */
-
+/* =====================
+   YES BUTTON
+===================== */
 yesBtn.addEventListener("click", () => {
-
-  // Confetti celebration
   confetti({
     particleCount: 180,
     spread: 100,
     origin: { y: 0.6 }
   });
 
-  // Popup message
   setTimeout(() => {
-    alert("Congratulations to you ❤️\nI knew you would say YES!");
+    alert("Congratulations ❤️\nI knew you would say YES!");
   }, 400);
-
 });
 </script>
 
