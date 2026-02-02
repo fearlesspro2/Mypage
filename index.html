@@ -22,7 +22,7 @@ body {
   overflow: hidden;
 }
 
-/* Floating Hearts Animation */
+/* Floating Hearts */
 .floating-heart {
   position: absolute;
   font-size: 20px;
@@ -30,69 +30,74 @@ body {
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(100vh);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-10vh);
-    opacity: 0;
-  }
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
 }
 
-/* PERFECT HEART SHAPE */
+/* Layout */
+.wrapper {
+  text-align: center;
+}
+
+/* Hearts Container */
+.hearts-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+/* Heart Shape */
 .heart {
   position: relative;
-  width: 220px;
-  height: 200px;
-  background-color: #ff0033;
+  width: 140px;
+  height: 130px;
+  background: #ff0033;
   transform: rotate(-45deg);
 }
 
-.heart:before,
-.heart:after {
+.heart::before,
+.heart::after {
   content: "";
   position: absolute;
-  width: 220px;
-  height: 200px;
-  background-color: #ff0033;
+  width: 140px;
+  height: 130px;
+  background: #ff0033;
   border-radius: 50%;
 }
 
-.heart:before {
-  top: -110px;
-  left: 0;
+.heart::before {
+  top: -70px;
 }
 
-.heart:after {
-  left: 110px;
-  top: 0;
+.heart::after {
+  left: 70px;
 }
 
-/* Heart Content */
-.content {
+/* Heart Number */
+.heart span {
   position: absolute;
   width: 100%;
   height: 100%;
   transform: rotate(45deg);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 28px;
   color: white;
-  text-align: center;
-  padding: 15px;
 }
 
-h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
+/* Text */
+.question {
+  font-size: 22px;
+  color: white;
+  margin-bottom: 15px;
 }
 
 /* Buttons */
 button {
-  padding: 10px 16px;
-  margin: 5px;
+  padding: 10px 18px;
+  margin: 6px;
   border: none;
   border-radius: 20px;
   font-size: 14px;
@@ -116,28 +121,33 @@ button {
 }
 
 /* Mobile Responsive */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+
+  .hearts-row {
+    gap: 20px;
+  }
+
   .heart {
-    width: 180px;
-    height: 160px;
+    width: 110px;
+    height: 100px;
   }
 
-  .heart:before,
-  .heart:after {
-    width: 180px;
-    height: 160px;
+  .heart::before,
+  .heart::after {
+    width: 110px;
+    height: 100px;
   }
 
-  .heart:before {
-    top: -90px;
+  .heart::before {
+    top: -55px;
   }
 
-  .heart:after {
-    left: 90px;
+  .heart::after {
+    left: 55px;
   }
 
-  h2 {
-    font-size: 15px;
+  .question {
+    font-size: 18px;
   }
 }
 </style>
@@ -145,37 +155,46 @@ button {
 
 <body>
 
-<div class="heart">
-  <div class="content">
-    <h2>Will you be my Valentine? 💘</h2>
+<div class="wrapper">
 
-    <div>
-      <button id="yesBtn">Yes ❤️</button>
-      <button id="noBtn">No 😈</button>
-      <button id="dynamicBtn"></button>
-    </div>
+  <!-- Hearts Row -->
+  <div class="hearts-row">
+    <div class="heart"><span>13</span></div>
+    <div class="heart"><span>14</span></div>
   </div>
+
+  <!-- Text -->
+  <div class="question">
+    Will you be my Valentine? 💘
+  </div>
+
+  <!-- Buttons -->
+  <div>
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No 😈</button>
+    <button id="dynamicBtn"></button>
+  </div>
+
 </div>
 
-<!-- Confetti Library -->
+<!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-// Floating Hearts Generator
+
+// Floating hearts generator
 function createFloatingHeart() {
   const heart = document.createElement("div");
-  heart.classList.add("floating-heart");
+  heart.className = "floating-heart";
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = Math.random() * 20 + 15 + "px";
   document.body.appendChild(heart);
 
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
+  setTimeout(() => heart.remove(), 6000);
 }
 
-setInterval(createFloatingHeart, 300);
+setInterval(createFloatingHeart, 350);
 
 // Buttons Logic
 const noBtn = document.getElementById("noBtn");
@@ -192,21 +211,21 @@ let steps = [
 
 let stepIndex = 0;
 
-// NO button runs away 😈
+// NO button escape 😈
 noBtn.addEventListener("mouseover", () => {
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 200 - 100;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 });
 
-// NO click logic
+// NO click
 noBtn.addEventListener("click", () => {
   noBtn.style.display = "none";
   dynamicBtn.style.display = "inline-block";
   dynamicBtn.innerText = steps[stepIndex];
 });
 
-// Loop dynamic button
+// Loop buttons
 dynamicBtn.addEventListener("click", () => {
   stepIndex++;
 
@@ -219,11 +238,11 @@ dynamicBtn.addEventListener("click", () => {
   }
 });
 
-// YES button celebration
+// YES celebration (NO SOUND)
 yesBtn.addEventListener("click", () => {
 
   confetti({
-    particleCount: 200,
+    particleCount: 180,
     spread: 90,
     origin: { y: 0.6 }
   });
@@ -232,6 +251,7 @@ yesBtn.addEventListener("click", () => {
     alert("🎉 Congratulations! I knew you will say YES ❤️😍");
   }, 400);
 });
+
 </script>
 
 </body>
