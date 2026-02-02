@@ -1,268 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Valentine Experience ❤️</title>
+💘 Prompt: Valentine Heart Website with Loop Buttons
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+Create a single-page responsive website using HTML, CSS, and JavaScript with the following requirements:
 
-<style>
-* {
-  box-sizing: border-box;
-  user-select: none;
-}
+🎨 Design Requirements:
 
-body {
-  margin: 0;
-  height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-  background: radial-gradient(circle at top, #ff4b7d, #0d001a);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+The main container should be a heart shape design in the center of the screen.
 
-/* BACKGROUND ANIMATION */
-.bg-glow {
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,0,100,.2), transparent 70%);
-  animation: glowMove 10s infinite alternate;
-}
+Background should be romantic (soft pink/red gradient).
 
-@keyframes glowMove {
-  0% { transform: translate(-20%, -20%); }
-  100% { transform: translate(20%, 20%); }
-}
+Inside the heart, display a large text:
+"Will you be my Valentine?"
 
-/* FLOATING PARTICLES */
-.particle {
-  position: absolute;
-  font-size: 18px;
-  animation: float 7s linear infinite;
-}
+Use smooth animations and cute hover effects.
 
-@keyframes float {
-  from { transform: translateY(110vh); opacity: 1; }
-  to { transform: translateY(-10vh); opacity: 0; }
-}
+Make it mobile-friendly and centered both vertically and horizontally.
 
-/* MAIN WRAPPER */
-.wrapper {
-  position: relative;
-  text-align: center;
-  z-index: 10;
-}
+🔘 Buttons Layout:
 
-/* HEART ROW */
-.hearts {
-  display: flex;
-  gap: 60px;
-  justify-content: center;
-  margin-bottom: 25px;
-}
+Below the text inside the heart:
 
-/* HEART DESIGN */
-.heart {
-  width: 140px;
-  height: 130px;
-  background: linear-gradient(145deg,#ff004c,#ff3b6f);
-  position: relative;
-  transform: rotate(-45deg);
-  animation: pulse 1.3s infinite;
-  box-shadow: 0 0 25px rgba(255,0,80,.7);
-}
+Show two buttons:
 
-@keyframes pulse {
-  0% { transform: rotate(-45deg) scale(1); }
-  50% { transform: rotate(-45deg) scale(1.08); }
-  100% { transform: rotate(-45deg) scale(1); }
-}
+Yes ❤️
 
-.heart:before,
-.heart:after {
-  content: "";
-  position: absolute;
-  width: 140px;
-  height: 130px;
-  background: inherit;
-  border-radius: 50%;
-}
+No 💔
 
-.heart:before {
-  top: -70px;
-}
+❌ No Button Behavior (Loop Logic):
 
-.heart:after {
-  left: 70px;
-}
+When the user clicks No:
 
-/* HEART TEXT */
-.heart span {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: rotate(45deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 30px;
-}
+Hide the No button.
 
-/* QUESTION */
-.question {
-  color: white;
-  font-size: 26px;
-  margin-bottom: 15px;
-  letter-spacing: 1px;
-  animation: fadeIn 2s ease;
-}
+Show a new button with text:
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+"Are you sure?"
 
-/* BUTTONS */
-button {
-  padding: 12px 22px;
-  border: none;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
-  transition: .3s;
-}
+When the user clicks Are you sure?:
 
-#yesBtn {
-  background: linear-gradient(to right,#00ffb3,#00ffaa);
-  box-shadow: 0 0 15px rgba(0,255,180,.8);
-}
+Hide it.
 
-#noBtn {
-  background: white;
-  position: relative;
-}
+Show next button:
 
-#trapBtn {
-  background: gold;
-  display: none;
-}
+"This is not possible 😢"
 
-/* MOBILE */
-@media(max-width:500px){
-  .hearts { gap: 30px; }
-  .question { font-size: 20px; }
-  .heart { width: 110px; height: 100px; }
-  .heart:before,.heart:after {
-    width: 110px;
-    height: 100px;
-  }
-  .heart:before { top:-55px; }
-  .heart:after { left:55px; }
-}
-</style>
-</head>
+When clicked:
 
-<body>
+Hide it.
 
-<div class="bg-glow"></div>
+Show next button:
 
-<div class="wrapper">
+"Think again 🤔"
 
-  <div class="hearts">
-    <div class="heart"><span>13</span></div>
-    <div class="heart"><span>14</span></div>
-  </div>
+When clicked:
 
-  <div class="question">
-    Will you be my Valentine? 💘
-  </div>
+Hide it.
 
-  <div>
-    <button id="yesBtn">YES ❤️</button>
-    <button id="noBtn">NO 😈</button>
-    <button id="trapBtn"></button>
-  </div>
+Bring back the original No 💔 button.
 
-</div>
+👉 This loop should repeat infinitely every time No is clicked.
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+✅ Yes Button Behavior:
 
-<script>
+When user clicks Yes ❤️:
 
-// FLOATING HEART PARTICLES
-function spawnParticle(){
-  const p = document.createElement("div");
-  p.className = "particle";
-  p.innerHTML = "❤️";
-  p.style.left = Math.random()*100+"vw";
-  p.style.fontSize = Math.random()*20+14+"px";
-  document.body.appendChild(p);
+Show a popup modal or alert message:
 
-  setTimeout(()=>p.remove(),7000);
-}
-setInterval(spawnParticle,300);
+"Congratulations ❤️ I knew you would say YES!"
 
-// BUTTON LOGIC
-const noBtn = document.getElementById("noBtn");
-const trapBtn = document.getElementById("trapBtn");
-const yesBtn = document.getElementById("yesBtn");
+Add small heart animation or confetti effect when popup appears.
 
-let trapTexts = [
- "Are you sure? 😏",
- "Impossible ❌",
- "Heart broken 💔",
- "Try again 😈",
- "Last warning 😢"
-];
+⚙️ Technical Requirements:
 
-let index = 0;
+Use pure HTML, CSS, JavaScript (no frameworks).
 
-// NO BUTTON ESCAPE AI 😈
-noBtn.addEventListener("mouseover",()=>{
-  let x = Math.random()*250-125;
-  let y = Math.random()*200-100;
-  noBtn.style.transform = `translate(${x}px,${y}px)`;
-});
+Keep code clean and commented.
 
-// NO CLICK
-noBtn.onclick = ()=>{
-  noBtn.style.display="none";
-  trapBtn.style.display="inline-block";
-  trapBtn.innerText = trapTexts[index];
-};
+Use CSS for heart shape creation (no images).
 
-// LOOP TRAP
-trapBtn.onclick = ()=>{
-  index++;
-  if(index>=trapTexts.length){
-    index=0;
-    trapBtn.style.display="none";
-    noBtn.style.display="inline-block";
-  } else {
-    trapBtn.innerText = trapTexts[index];
-  }
-};
+Add smooth transitions and button animations.
 
-// YES MAGIC
-yesBtn.onclick = ()=>{
+All code should be in one HTML file (internal CSS + JS).
 
-  confetti({
-    particleCount:300,
-    spread:120,
-    origin:{y:.6}
-  });
+✨ Extra Effects (Optional but Preferred):
 
-  setTimeout(()=>{
-    alert("💖 Congratulations!\nI knew you would say YES 😍");
-  },500);
-};
+Floating hearts animation in background.
 
-</script>
+Button bounce animation on hover.
 
-</body>
-</html>
+Soft glowing heart border.
