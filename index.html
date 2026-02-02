@@ -1,90 +1,255 @@
-💘 Prompt: Valentine Heart Website with Loop Buttons
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Be My Valentine ❤️</title>
 
-Create a single-page responsive website using HTML, CSS, and JavaScript with the following requirements:
+<style>
+/* =====================
+   GLOBAL STYLES
+===================== */
+* {
+  box-sizing: border-box;
+}
 
-🎨 Design Requirements:
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff6a88, #ff99ac);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
 
-The main container should be a heart shape design in the center of the screen.
+/* =====================
+   FLOATING HEARTS (BACKGROUND)
+===================== */
+.floating-heart {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0.8;
+  animation: floatUp 7s linear infinite;
+}
 
-Background should be romantic (soft pink/red gradient).
+@keyframes floatUp {
+  from {
+    transform: translateY(110vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
 
-Inside the heart, display a large text:
-"Will you be my Valentine?"
+/* =====================
+   HEART CONTAINER
+===================== */
+.heart {
+  position: relative;
+  width: 300px;
+  height: 270px;
+  background: #ff0033;
+  transform: rotate(-45deg);
+  box-shadow: 0 0 25px rgba(255, 0, 80, 0.6);
+  animation: glow 2s infinite alternate;
+}
 
-Use smooth animations and cute hover effects.
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(255,0,80,0.5); }
+  to   { box-shadow: 0 0 35px rgba(255,0,80,0.9); }
+}
 
-Make it mobile-friendly and centered both vertically and horizontally.
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 270px;
+  background: #ff0033;
+  border-radius: 50%;
+}
 
-🔘 Buttons Layout:
+.heart::before {
+  top: -150px;
+  left: 0;
+}
 
-Below the text inside the heart:
+.heart::after {
+  left: 150px;
+  top: 0;
+}
 
-Show two buttons:
+/* =====================
+   HEART CONTENT
+===================== */
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(45deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
 
-Yes ❤️
+.content h1 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
 
-No 💔
+/* =====================
+   BUTTONS
+===================== */
+.buttons {
+  margin-top: 10px;
+}
 
-❌ No Button Behavior (Loop Logic):
+button {
+  padding: 10px 18px;
+  margin: 6px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-When the user clicks No:
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
 
-Hide the No button.
+#yesBtn {
+  background: #00ffb3;
+}
 
-Show a new button with text:
+#noBtn {
+  background: #ffffff;
+}
 
-"Are you sure?"
+#loopBtn {
+  background: #ffe066;
+  display: none;
+}
 
-When the user clicks Are you sure?:
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 500px) {
+  .heart {
+    width: 240px;
+    height: 215px;
+  }
+  .heart::before,
+  .heart::after {
+    width: 240px;
+    height: 215px;
+  }
+  .heart::before {
+    top: -120px;
+  }
+  .heart::after {
+    left: 120px;
+  }
+  .content h1 {
+    font-size: 18px;
+  }
+}
+</style>
+</head>
 
-Hide it.
+<body>
 
-Show next button:
+<!-- HEART -->
+<div class="heart">
+  <div class="content">
+    <h1>Will you be my Valentine? 💖</h1>
 
-"This is not possible 😢"
+    <div class="buttons">
+      <button id="yesBtn">Yes ❤️</button>
+      <button id="noBtn">No 💔</button>
+      <button id="loopBtn"></button>
+    </div>
+  </div>
+</div>
 
-When clicked:
+<!-- CONFETTI (PURE JS LIBRARY) -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-Hide it.
+<script>
+/* =====================
+   FLOATING HEARTS LOGIC
+===================== */
+function createFloatingHeart() {
+  const heart = document.createElement("div");
+  heart.className = "floating-heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 14 + "px";
+  document.body.appendChild(heart);
 
-Show next button:
+  setTimeout(() => heart.remove(), 7000);
+}
 
-"Think again 🤔"
+setInterval(createFloatingHeart, 350);
 
-When clicked:
+/* =====================
+   BUTTON LOOP LOGIC
+===================== */
+const noBtn = document.getElementById("noBtn");
+const loopBtn = document.getElementById("loopBtn");
+const yesBtn = document.getElementById("yesBtn");
 
-Hide it.
+const loopTexts = [
+  "Are you sure?",
+  "This is not possible 😢",
+  "Think again 🤔"
+];
 
-Bring back the original No 💔 button.
+let step = 0;
 
-👉 This loop should repeat infinitely every time No is clicked.
+noBtn.addEventListener("click", () => {
+  noBtn.style.display = "none";
+  loopBtn.style.display = "inline-block";
+  loopBtn.textContent = loopTexts[step];
+});
 
-✅ Yes Button Behavior:
+loopBtn.addEventListener("click", () => {
+  step++;
 
-When user clicks Yes ❤️:
+  if (step >= loopTexts.length) {
+    step = 0;
+    loopBtn.style.display = "none";
+    noBtn.style.display = "inline-block";
+  } else {
+    loopBtn.textContent = loopTexts[step];
+  }
+});
 
-Show a popup modal or alert message:
+/* =====================
+   YES BUTTON
+===================== */
+yesBtn.addEventListener("click", () => {
+  confetti({
+    particleCount: 180,
+    spread: 100,
+    origin: { y: 0.6 }
+  });
 
-"Congratulations ❤️ I knew you would say YES!"
+  setTimeout(() => {
+    alert("Congratulations ❤️\nI knew you would say YES!");
+  }, 400);
+});
+</script>
 
-Add small heart animation or confetti effect when popup appears.
-
-⚙️ Technical Requirements:
-
-Use pure HTML, CSS, JavaScript (no frameworks).
-
-Keep code clean and commented.
-
-Use CSS for heart shape creation (no images).
-
-Add smooth transitions and button animations.
-
-All code should be in one HTML file (internal CSS + JS).
-
-✨ Extra Effects (Optional but Preferred):
-
-Floating hearts animation in background.
-
-Button bounce animation on hover.
-
-Soft glowing heart border.
+</body>
+</html>
