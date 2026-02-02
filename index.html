@@ -52,63 +52,48 @@ body {
   }
 }
 
-/* ================= HEART SHAPE ================= */
+/* ================= PERFECT HEART SHAPE ================= */
 
 .heart {
   position: relative;
-  width: 300px;
-  height: 270px;
-  background: linear-gradient(145deg,#ff0033,#ff4d6d);
+  width: 220px;
+  height: 200px;
   transform: rotate(-45deg);
-  box-shadow: 0 0 40px rgba(255,0,80,.8);
+  background: linear-gradient(145deg,#ff0033,#ff4d6d);
   animation: heartbeat 1.4s infinite;
+  box-shadow: 0 0 35px rgba(255,0,80,.8);
 }
 
-/* Heart beat */
-@keyframes heartbeat {
-  0% {transform: rotate(-45deg) scale(1);}
-  25% {transform: rotate(-45deg) scale(1.08);}
-  40% {transform: rotate(-45deg) scale(1);}
-  60% {transform: rotate(-45deg) scale(1.1);}
-  100% {transform: rotate(-45deg) scale(1);}
-}
-
-/* Shine sweep */
+/* Top circles */
+.heart::before,
 .heart::after {
   content: "";
   position: absolute;
-  width: 60%;
-  height: 140%;
-  background: rgba(255,255,255,.15);
-  top: -20%;
-  left: -80%;
-  transform: rotate(25deg);
-  animation: shine 3s infinite;
-}
-
-@keyframes shine {
-  0% {left:-80%;}
-  100% {left:140%;}
-}
-
-.heart:before {
-  content: "";
-  position: absolute;
-  width: 300px;
-  height: 270px;
+  width: 220px;
+  height: 200px;
   background: inherit;
   border-radius: 50%;
-  top: -150px;
 }
 
-.heart span {
-  content: "";
-  position: absolute;
-  width: 300px;
-  height: 270px;
-  background: inherit;
-  border-radius: 50%;
-  left: 150px;
+/* Left circle */
+.heart::before {
+  top: -110px;
+  left: 0;
+}
+
+/* Right circle */
+.heart::after {
+  left: 110px;
+  top: 0;
+}
+
+/* ================= HEART BEAT ================= */
+
+@keyframes heartbeat {
+  0% {transform: rotate(-45deg) scale(1);}
+  30% {transform: rotate(-45deg) scale(1.08);}
+  60% {transform: rotate(-45deg) scale(1);}
+  100% {transform: rotate(-45deg) scale(1);}
 }
 
 /* ================= HEART CONTENT ================= */
@@ -124,12 +109,12 @@ body {
   align-items: center;
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 18px;
 }
 
 .content h1 {
-  font-size: 22px;
-  margin-bottom: 15px;
+  font-size: 20px;
+  margin-bottom: 14px;
   animation: textFloat 2s ease;
 }
 
@@ -151,16 +136,9 @@ button {
   transition: .25s;
 }
 
-/* Bounce hover */
 button:hover {
-  animation: bounce .4s;
+  transform: scale(1.12);
   box-shadow: 0 6px 18px rgba(0,0,0,.3);
-}
-
-@keyframes bounce {
-  0% {transform:scale(1);}
-  50% {transform:scale(1.15);}
-  100% {transform:scale(1);}
 }
 
 #yesBtn {
@@ -205,21 +183,21 @@ button:hover {
 @media(max-width:500px){
 
 .heart{
-  width:240px;
-  height:215px;
+  width:180px;
+  height:160px;
 }
 
-.heart:before,
-.heart span{
-  width:240px;
-  height:215px;
+.heart::before,
+.heart::after{
+  width:180px;
+  height:160px;
 }
 
-.heart:before{top:-120px;}
-.heart span{left:120px;}
+.heart::before{top:-90px;}
+.heart::after{left:90px;}
 
 .content h1{
-  font-size:18px;
+  font-size:17px;
 }
 
 }
@@ -231,7 +209,7 @@ button:hover {
 
 <!-- HEART -->
 <div class="heart" id="heart">
-  <span></span>
+
   <div class="content">
 
     <h1>Will you be my Valentine? 💖</h1>
@@ -243,6 +221,7 @@ button:hover {
     </div>
 
   </div>
+
 </div>
 
 <!-- MODAL -->
@@ -316,21 +295,11 @@ yesBtn.onclick=()=>{
 
 };
 
-/* CLICK ANYWHERE TO CLOSE MODAL */
+/* CLOSE MODAL */
 
 modal.onclick=()=>{
  modal.style.display="none";
 };
-
-/* PARALLAX HEART MOVE */
-
-const heart=document.getElementById("heart");
-
-document.addEventListener("mousemove",(e)=>{
- const x=(window.innerWidth/2 - e.clientX)/40;
- const y=(window.innerHeight/2 - e.clientY)/40;
- heart.style.transform=`rotate(-45deg) translate(${x}px,${y}px)`;
-});
 
 </script>
 
